@@ -6,13 +6,13 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: dclaw_crm
+      POSTGRES_DB: dclaw_timecalc
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d dclaw_crm"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dclaw_timecalc"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -22,7 +22,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/dclaw_crm
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/dclaw_timecalc
       APP_ENV: production
     ports:
       - "8095:8095"
