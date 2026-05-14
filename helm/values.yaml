@@ -2,13 +2,13 @@ replicaCount: 1
 
 image:
   backend:
-    repository: tharunidayara/dclaw-time-calculator-backend
+    repository: dclaw-time-calculator-backend
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Never
   frontend:
-    repository: tharunidayara/dclaw-time-calculator-frontend
+    repository: dclaw-time-calculator-frontend
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Never
 
 service:
   backend:
@@ -48,3 +48,13 @@ affinity: {}
 # Override in production — matches the secret in secrets.yaml
 database:
   url: "postgresql+asyncpg://postgres:postgres@postgres:5432/dclaw_timecalc"
+
+# In-cluster Postgres used by the backend's lifespan/init_db.
+# Disable and point database.url elsewhere for managed Postgres.
+postgres:
+  enabled: true
+  image: postgres:16-alpine
+  user: postgres
+  password: postgres
+  database: dclaw_timecalc
+  storage: 1Gi

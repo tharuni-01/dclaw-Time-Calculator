@@ -23,8 +23,13 @@ interface LocalEntry {
   operation: "add" | "subtract";
 }
 
+let __entryIdCounter = 0;
+function newEntryId(): string {
+  return `e${++__entryIdCounter}`;
+}
+
 function emptyEntry(): LocalEntry {
-  return { id: crypto.randomUUID(), label: "", hours: 0, minutes: 0, seconds: 0, operation: "add" };
+  return { id: newEntryId(), label: "", hours: 0, minutes: 0, seconds: 0, operation: "add" };
 }
 
 function computeTotal(entries: LocalEntry[]): SessionTotal {
@@ -62,7 +67,7 @@ export default function Calculator({ sessionId }: { sessionId?: string }) {
       setCurrentSessionId(session.id);
       setSessionName(session.name);
       const loaded = session.entries.map((e) => ({
-        id: crypto.randomUUID(),
+        id: newEntryId(),
         serverId: e.id,
         label: e.label,
         hours: e.hours,
